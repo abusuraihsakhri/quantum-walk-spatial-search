@@ -12,9 +12,6 @@ from enrichment import (
     FilesToCreatemodifyEngine,
     TestingEngine,
     ContinuoustimeQuantumWalkForGraphConnectivityEngine,
-    ImplementationEngine,
-    FilesToCreatemodifyEngine,
-    TestingEngine,
     QuantumwalkspatialsearchEnrichmentSuite,
     enrichment_suite,
 )
@@ -33,3 +30,20 @@ def test_enrichment_threshold_escalation():
     for k, v in res.items():
         assert v.status in ["WARNING", "CRITICAL_ALERT"]
         assert len(v.alerts) > 0
+
+def test_enrichment_suite_has_unique_engines():
+    """Verify the suite has 5 unique engine instances (no duplicates)."""
+    suite = QuantumwalkspatialsearchEnrichmentSuite()
+    assert len([
+        suite.spatialsearchviaquan,
+        suite.implementationengine,
+        suite.filestocreatemodifye,
+        suite.testingengine,
+        suite.continuoustimequantu,
+    ]) == 5
+
+def test_enrichment_suite_returns_five_results():
+    """Verify execute_all returns exactly 5 results (one per engine)."""
+    suite = QuantumwalkspatialsearchEnrichmentSuite()
+    res = suite.execute_all(primary_val=1.0, secondary_val=0.5)
+    assert len(res) == 5
