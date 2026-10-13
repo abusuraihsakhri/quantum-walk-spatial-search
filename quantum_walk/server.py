@@ -1,8 +1,9 @@
 """
 FastAPI REST API Server for Continuous-Time & Discrete Quantum Walk Graph Search Agent.
 """
-from typing import Dict, Any
+from typing import Dict, Any, Optional
 from .models import FrontierPayload
+from .search import simulate_complete_graph
 from .agents import QuantumWalkCoordinator
 
 coordinator = QuantumWalkCoordinator()
@@ -11,7 +12,7 @@ coordinator = QuantumWalkCoordinator()
 def create_app():
     try:
         from fastapi import FastAPI
-        from pydantic import BaseModel
+        from pydantic import BaseModel, Field
 
         app = FastAPI(
             title="Continuous-Time & Discrete Quantum Walk Graph Search Agent",
@@ -30,6 +31,21 @@ def create_app():
 
         class ChatRequest(BaseModel):
             query: str
+
+        class SearchRequest(BaseModel):
+            node_count: int = Field(default=16, ge=2, le=100000)
+            marked_vertex: int = Field(default=0, ge=0)
+            gamma: Optional[float] = None
+            max_time: Optional[float] = None
+            samples: int = Field(default=201, ge=2, le=2001)
+
+        @app.post("/api/quantum/search")
+        def quantum_search(req: SearchRequest):
+            from fastapi import HTTPException
+            try:
+                return simulate_complete_graph(req.node_count, req.marked_vertex, req.gamma, req.max_time, req.samples)
+            except ValueError as exc:
+                raise HTTPException(status_code=422, detail=str(exc)) from exc
 
         @app.get("/health")
         def health():
