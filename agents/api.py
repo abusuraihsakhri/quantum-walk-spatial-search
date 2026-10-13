@@ -1,10 +1,11 @@
 """
 FastAPI REST API Server for Quantum Walk Spatial Search.
 """
-from typing import Dict, Any, List
+from typing import Dict, Any, List, Optional
 from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from .base import AuditLogger, PHIGuard
+from quantum_walk.search import simulate_complete_graph
 from .models import SystemTaskPayload, ConsensusDossier
 from .supervisor import SystemSupervisor
 
@@ -39,6 +40,23 @@ def metrics():
 def api_audit(payload: SystemTaskPayload):
     dossier = supervisor.process_task(payload)
     return dossier.to_dict()
+
+
+class SearchRequest(BaseModel):
+    node_count: int = Field(default=16, ge=2, le=100000)
+    marked_vertex: int = Field(default=0, ge=0)
+    gamma: Optional[float] = None
+    max_time: Optional[float] = None
+    samples: int = Field(default=201, ge=2, le=2001)
+
+
+@app.post("/api/quantum/search")
+def quantum_search(req: SearchRequest):
+    """Run exact ideal continuous-time search on the complete graph."""
+    try:
+        return simulate_complete_graph(req.node_count, req.marked_vertex, req.gamma, req.max_time, req.samples)
+    except ValueError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
 
 
 @app.post("/api/chat")
