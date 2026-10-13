@@ -11,8 +11,8 @@ export function simulateCompleteGraph(nodeCount = 16, markedVertex = 0, gamma = 
   }
   gamma = gamma === null ? 1 / nodeCount : gamma;
   maxTime = maxTime === null ? Math.PI * Math.sqrt(nodeCount) / 2 : maxTime;
-  if (!Number.isFinite(gamma) || gamma <= 0) {
-    throw new RangeError('Hopping rate γ must be positive and finite.');
+  if (!Number.isFinite(gamma) || gamma <= 0 || gamma > 10000) {
+    throw new RangeError('Hopping rate γ must be finite and in (0, 10,000].');
   }
   if (!Number.isFinite(maxTime) || maxTime <= 0 || maxTime > 100000) {
     throw new RangeError('Maximum time must be in (0, 100,000].');

@@ -20,7 +20,7 @@ test('hopping-rate perturbation changes output', () => {
 });
 
 test('rejects invalid inputs and exports valid CSV', () => {
-  for (const args of [[1], [2, 2], [16, 0, 0], [16, 0, Infinity], [16, 0, null, -1], [16, 0, null, null, 1]]) {
+  for (const args of [[1], [2, 2], [16, 0, 0], [16, 0, 1e308], [16, 0, Infinity], [16, 0, null, -1], [16, 0, null, null, 1]]) {
     assert.throws(() => simulateCompleteGraph(...args), RangeError);
   }
   const csv = resultsCsv(simulateCompleteGraph(4, 1, null, null, 3));

@@ -32,8 +32,8 @@ def simulate_complete_graph(
     if isinstance(samples, bool) or not isinstance(samples, int) or not 2 <= samples <= 2001:
         raise ValueError("samples must be an integer between 2 and 2001")
     gamma = 1.0 / node_count if gamma is None else gamma
-    if not isinstance(gamma, (int, float)) or isinstance(gamma, bool) or not math.isfinite(gamma) or gamma <= 0:
-        raise ValueError("gamma must be positive and finite")
+    if not isinstance(gamma, (int, float)) or isinstance(gamma, bool) or not math.isfinite(gamma) or not 0 < gamma <= 10000:
+        raise ValueError("gamma must be finite and in (0, 10000]")
     max_time = math.pi * math.sqrt(node_count) / 2 if max_time is None else max_time
     if not isinstance(max_time, (int, float)) or isinstance(max_time, bool) or not math.isfinite(max_time) or not 0 < max_time <= 100_000:
         raise ValueError("max_time must be finite and in (0, 100000]")

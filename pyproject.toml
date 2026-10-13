@@ -29,3 +29,10 @@ quantum-walk-search = "quantum_walk.search:main"
 [project.urls]
 Homepage = "https://github.com/abusuraihsakhri/quantum-walk-spatial-search"
 Repository = "https://github.com/abusuraihsakhri/quantum-walk-spatial-search.git"
+
+[tool.setuptools]
+py-modules = ["cli", "enrichment", "simulator"]
+
+[tool.setuptools.packages.find]
+include = ["agents*", "quantum_walk*"]
+namespaces = false

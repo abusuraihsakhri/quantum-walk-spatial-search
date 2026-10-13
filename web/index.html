@@ -23,7 +23,7 @@
         <form id="search-form">
           <div class="field"><label for="nodes">Vertices (N)</label><input id="nodes" type="number" min="2" max="100000" step="1" value="64" required><small>Complete graph K<sub>N</sub>, 2–100,000 vertices</small></div>
           <div class="field"><label for="marked">Marked vertex (0-based)</label><input id="marked" type="number" min="0" max="63" step="1" value="0" required><small>All vertices are symmetric in K<sub>N</sub></small></div>
-          <div class="field"><div class="between"><label for="gamma">Hopping rate (γ)</label><label class="check"><input id="auto-gamma" type="checkbox" checked> Set γ = 1/N</label></div><input id="gamma" type="number" min="0.000000001" step="any" value="0.015625" required><small>Optimal search rate for this graph model</small></div>
+          <div class="field"><div class="between"><label for="gamma">Hopping rate (γ)</label><label class="check"><input id="auto-gamma" type="checkbox" checked> Set γ = 1/N</label></div><input id="gamma" type="number" min="0.000000001" max="10000" step="any" value="0.015625" required><small>Optimal search rate for this graph model</small></div>
           <div class="field"><div class="between"><label for="max-time">Maximum time</label><label class="check"><input id="auto-time" type="checkbox" checked> Set π√N / 2</label></div><input id="max-time" type="number" min="0.000000001" max="100000" step="any" required><small>401 uniformly spaced time samples</small></div>
           <button type="submit" class="primary">Run simulation</button>
         </form>

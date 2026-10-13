@@ -23,7 +23,7 @@ def test_detuned_gamma_decreases_success():
 @pytest.mark.parametrize('kwargs', [
     {'node_count': 1}, {'node_count': 2.5}, {'node_count': True},
     {'node_count': 4, 'marked_vertex': 4}, {'marked_vertex': -1},
-    {'gamma': 0}, {'gamma': float('nan')}, {'gamma': float('inf')},
+    {'gamma': 0}, {'gamma': 1e308}, {'gamma': float('nan')}, {'gamma': float('inf')},
     {'max_time': -1}, {'max_time': float('nan')}, {'max_time': 100001},
     {'samples': 1}, {'samples': 2002},
 ])
